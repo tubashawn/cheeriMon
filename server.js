@@ -5,14 +5,15 @@ var cheerio = require("cheerio");
 var logger = require("morgan");
 var mongojs = require("mongojs");
 var request = require("request");
+var methodOverride = require("method-override");
+
 // var Promise = require("bluebird");
 // var mongoose = require("mongoose");
 // var axios = require("axios");
 // mongoose.Promise = Promise;
-
-
 // var routes = require("./routes");
 // var models = require("./models"); 
+
 var PORT = process.env.PORT || 3000;
 
 var app = express();
@@ -28,6 +29,8 @@ app.use(bodyParser.urlencoded({
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+app.use(methodOverride("_method"));
+
 // Need to figure out why I can;t get mongoose to work
 // mongoose.connect("mongodb://localhost/cheeriMonDB");
 // var db = mongoose.connection;
@@ -44,13 +47,9 @@ app.listen(PORT, function () {
 });
 
 app.get("/", function (req, res) {
-    res.send("test");
+    res.render("main");
 });
 
-
-// app.get("/scrape", function(req, res) {
-
-// });
 
 app.get("/scrape", function (req, res) {
     // console.log("test");
